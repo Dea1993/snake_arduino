@@ -8,8 +8,8 @@ byte frame[8][12] = {
   { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
   { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
   { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-  { 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0 },
-  { 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0 },
+  { 0, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0 },
+  { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
   { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
   { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
   { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }
@@ -22,19 +22,25 @@ const uint32_t game_over[] = {
 };
 
 // snake initial coordinates
-int snake_x[4]= {4, 3, 2, 1};
-int snake_y[4]= {3, 3, 3, 3};
+int snake_x[96]= {4, 3, 2, 1};
+int snake_y[96]= {3, 3, 3, 3};
 int snake_len= 4;
+//int *snake_x;
+//int *snake_y;
+//snake_x= (int *)malloc(snake_len * sizeof(int));
+//snake_y= (int *)malloc(snake_len * sizeof(int));
+
 char direction= 'r';
 
 int points= 0;
 
 // apple initial position
 int apple_x= 9;
-int apple_y= 4;
+int apple_y= 3;
 
 void setup() {
-  Serial.begin(115200);
+  //Serial.begin(115200);
+  Serial.begin(9600);
   // stard LED matrix
   matrix.begin();
   // btn up
@@ -47,6 +53,12 @@ void setup() {
   pinMode(10, INPUT);
 }
 
+void add_tail_block() {
+  snake_len++;
+  snake_y[snake_len-1]= snake_y[snake_len-2];
+  snake_x[snake_len-1]= snake_x[snake_len-2];
+}
+
 void eat_apple() {
   points++;
   //XXX new apple coordinates
@@ -54,6 +66,8 @@ void eat_apple() {
   apple_x= random(11);
   apple_y= random(7);
   frame[apple_y][apple_x]= 1;
+
+  add_tail_block();
 }
 
 void move_snake() {
@@ -119,6 +133,7 @@ void change_direction() {
 }
 
 void loop() {
+  Serial.println(points);
   change_direction();
   matrix.renderBitmap(frame, 8, 12);
   delay(300);
@@ -126,6 +141,7 @@ void loop() {
 
 
   // XXX to remove, test only
-  direction= 'b';
-  eat_apple();
+  //direction= 'b';
+  //eat_apple();
+  //add_tail_block();
 }
