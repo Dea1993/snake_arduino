@@ -1,5 +1,5 @@
 compile:
-	arduino-cli compile -b arduino:renesas_uno:unor4wifi snake.ino
+	arduino-cli compile -b arduino:renesas_uno:unor4wifi ./snake_arduino.ino
 
 upload:
 	arduino-cli upload -b arduino:renesas_uno:unor4wifi -p /dev/ttyACM0

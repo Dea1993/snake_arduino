@@ -36,6 +36,14 @@ void setup() {
   Serial.begin(115200);
   // stard LED matrix
   matrix.begin();
+  // btn up
+  pinMode(13, INPUT);
+  // btn right
+  pinMode(12, INPUT);
+  // btn bottom
+  pinMode(11, INPUT);
+  // btn left
+  pinMode(10, INPUT);
 }
 
 void move_snake() {
@@ -81,6 +89,9 @@ void move_snake() {
 
   // render the snake head
   frame[snake_y[0]][snake_x[0]]= 1;
+}
+
+void change_direction() {
 }
 
 void loop() {
