@@ -25,8 +25,7 @@ const uint32_t game_over[] = {
 int snake_x[4]= {4, 3, 2, 1};
 int snake_y[4]= {3, 3, 3, 3};
 int snake_len= 4;
-// direction 1 right, 2 bottom, 3 left, 4 top
-int direction= 1;
+char direction= 'r';
 
 // apple initial position
 //int apple_x= 9;
@@ -67,22 +66,22 @@ void move_snake() {
 
   //snake_y[0]= snake_y[0];
   // go right
-  if (direction == 1) {
+  if (direction == 'r') {
     snake_x[0]+= 1;
     if (snake_x[0] > 11) snake_x[0]= 0;
   }
-  // go down
-  else if (direction == 2) {
+  // go bottom
+  else if (direction == 'b') {
     snake_y[0]+= 1;
     if (snake_y[0] > 7) snake_y[0]= 0;
   }
   // go left
-  else if (direction == 3) {
+  else if (direction == 'l') {
     snake_x[0]-= 1;
     if (snake_x[0] < 0) snake_x[0]= 11;
   }
   // go up
-  else if (direction == 4) {
+  else if (direction == 'u') {
     snake_y[0]-= 1;
     if (snake_y[0] < 0) snake_y[0]= 7;
   }
@@ -92,11 +91,26 @@ void move_snake() {
 }
 
 void change_direction() {
+  // up
+  int u= digitalRead(13);
+  // right
+  int r= digitalRead(12);
+  // bottom
+  int b= digitalRead(11);
+  // left
+  int l= digitalRead(10);
+  
+  if      (u == HIGH && direction != 'b') direction= 'u';
+  else if (r == HIGH && direction != 'l') direction= 'r';
+  else if (b == HIGH && direction != 'u') direction= 'b';
+  else if (l == HIGH && direction != 'r') direction= 'l';
 }
 
 void loop() {
+  change_direction();
   matrix.renderBitmap(frame, 8, 12);
   delay(300);
   move_snake();
-  direction= 2;
+  // XXX to remove
+  direction= 'b';
 }
