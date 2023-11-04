@@ -15,7 +15,7 @@ byte frame[8][12] = {
   { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }
 };
 
-const uint32_t frame_game_over[] = {
+const uint32_t game_over[] = {
   0x20410809,
   0x600600,
   0x90108204,
@@ -70,17 +70,6 @@ void eat_apple() {
   add_tail_block();
 }
 
-void game_over() {
-  // XXX show X
-  delay(1000)
-  // show points
-  for (int i=0; i < points; i++) {
-    frame[0][i]= 1;
-    delay(100);
-  }
-  while (1 != 0) {}
-}
-
 void move_snake() {
   /*
     starting from head, save curr position w and h
@@ -96,8 +85,6 @@ void move_snake() {
     frame[snake_y[i-1]][snake_x[i-1]]= 1;
     snake_x[i]= snake_x[i-1];
     snake_y[i]= snake_y[i-1];
-    if (snake_x[0] == snake_x[i] && snake_y == snake_y[i])
-      game_over();
   }
 
   //move the snake head
