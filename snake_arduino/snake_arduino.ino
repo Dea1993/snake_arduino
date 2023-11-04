@@ -35,6 +35,7 @@ int apple_x= 9;
 int apple_y= 3;
 
 int loop_delay= 300;
+long exec_t2= millis();
 
 void setup() {
   //Serial.begin(115200);
@@ -165,10 +166,15 @@ void change_direction() {
   else if (l == LOW && direction != 'r') direction= 'l';
 }
 
+
 void loop() {
-  show_apple();
+  long exec_t1= millis();
   change_direction();
-  matrix.renderBitmap(frame, 8, 12);
-  move_snake();
-  delay(loop_delay);
+  if (exec_t1 - exec_t2 > loop_delay) {
+    show_apple();
+    move_snake();
+    matrix.renderBitmap(frame, 8, 12);
+    exec_t2= exec_t1;
+  }
+  delay(50);
 }
