@@ -59,6 +59,10 @@ void add_tail_block() {
   snake_x[snake_len-1]= snake_x[snake_len-2];
 }
 
+void show_apple() {
+  frame[apple_y][apple_x]= 1;
+}
+
 void eat_apple() {
   points++;
   Serial.println(points);
@@ -69,7 +73,7 @@ void eat_apple() {
   frame[apple_y][apple_x]= 0;
   apple_x= random(11);
   apple_y= random(7);
-  frame[apple_y][apple_x]= 1;
+  show_apple();
   
   // increase snake length
   add_tail_block();
@@ -103,7 +107,11 @@ void game_over() {
 
 void move_snake() {
   int i=0;
-  frame[snake_y[snake_len-1]][snake_x[snake_len-1]]= 0;
+
+  int y= snake_y[snake_len-1];
+  int x= snake_x[snake_len-1];
+  frame[y][x]= 0;
+
   // move and render the snake tail
   for (i= snake_len-1; i > 0; i--) {
     frame[snake_y[i-1]][snake_x[i-1]]= 1;
@@ -158,8 +166,9 @@ void change_direction() {
 }
 
 void loop() {
+  show_apple();
   change_direction();
   matrix.renderBitmap(frame, 8, 12);
-  delay(loop_delay);
   move_snake();
+  delay(loop_delay);
 }
