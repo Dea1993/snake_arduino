@@ -27,9 +27,11 @@ int snake_y[4]= {3, 3, 3, 3};
 int snake_len= 4;
 char direction= 'r';
 
+int points= 0;
+
 // apple initial position
-//int apple_x= 9;
-//int apple_y= 4;
+int apple_x= 9;
+int apple_y= 4;
 
 void setup() {
   Serial.begin(115200);
@@ -43,6 +45,15 @@ void setup() {
   pinMode(11, INPUT);
   // btn left
   pinMode(10, INPUT);
+}
+
+void eat_apple() {
+  points++;
+  //XXX new apple coordinates
+  frame[apple_y][apple_x]= 0;
+  apple_x= random(11);
+  apple_y= random(7);
+  frame[apple_y][apple_x]= 1;
 }
 
 void move_snake() {
@@ -85,6 +96,7 @@ void move_snake() {
     snake_y[0]-= 1;
     if (snake_y[0] < 0) snake_y[0]= 7;
   }
+  if (snake_y[0] == apple_y && snake_x[0] == apple_x) eat_apple();
 
   // render the snake head
   frame[snake_y[0]][snake_x[0]]= 1;
@@ -111,6 +123,9 @@ void loop() {
   matrix.renderBitmap(frame, 8, 12);
   delay(300);
   move_snake();
-  // XXX to remove
+
+
+  // XXX to remove, test only
   direction= 'b';
+  eat_apple();
 }
