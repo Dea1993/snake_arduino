@@ -44,13 +44,13 @@ void setup() {
   // stard LED matrix
   matrix.begin();
   // btn up
-  pinMode(13, INPUT);
+  pinMode(13, INPUT_PULLUP);
   // btn right
-  pinMode(12, INPUT);
+  pinMode(12, INPUT_PULLUP);
   // btn bottom
-  pinMode(11, INPUT);
+  pinMode(11, INPUT_PULLUP);
   // btn left
-  pinMode(10, INPUT);
+  pinMode(10, INPUT_PULLUP);
 }
 
 void add_tail_block() {
@@ -126,10 +126,10 @@ void change_direction() {
   // left
   int l= digitalRead(10);
   
-  if      (u == HIGH && direction != 'b') direction= 'u';
-  else if (r == HIGH && direction != 'l') direction= 'r';
-  else if (b == HIGH && direction != 'u') direction= 'b';
-  else if (l == HIGH && direction != 'r') direction= 'l';
+  if      (u == LOW && direction != 'b') direction= 'u';
+  else if (r == LOW && direction != 'l') direction= 'r';
+  else if (b == LOW && direction != 'u') direction= 'b';
+  else if (l == LOW && direction != 'r') direction= 'l';
 }
 
 void loop() {
