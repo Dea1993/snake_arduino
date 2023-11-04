@@ -97,7 +97,8 @@ void game_over() {
     matrix.renderBitmap(frame, 8, 12);
     delay(100);
   }
-  while (true) {}
+  Serial.println("Game Over");
+  while (true) delay(10000);
 }
 
 void move_snake() {
