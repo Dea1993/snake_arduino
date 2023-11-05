@@ -64,18 +64,16 @@ void game_over() {
   delay(1000);
 
   // show points inside the matrix
-  int i= 0;
-  int j= 0;
   // clear the old frame
-  for (i=0; i < 12; i++) {
-    for (j=0; j < 8; j++) {
+  for (int i=0; i < 12; i++) {
+    for (int j=0; j < 8; j++) {
       frame[j][i]= 0;
     }
   }
   matrix.renderBitmap(frame, 8, 12);
 
   // show points
-  for (i=0; i < points; i++) {
+  for (int i=0; i < points; i++) {
     frame[0][i]= 1;
     matrix.renderBitmap(frame, 8, 12);
     delay(100);
