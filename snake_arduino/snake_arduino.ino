@@ -1,9 +1,14 @@
 #include "Arduino_LED_Matrix.h"
 
 #define BTNUP 13
-#define BTNRIGHT 12
-#define BTNBOTTOM 11
-#define BTNLEFT 10
+#define BTNBOTTOM 12
+#define BTNLEFT 11
+#define BTNRIGHT 10
+
+#define GOUP 1
+#define GOBOTTOM 2
+#define GOLEFT 3
+#define GORIGHT 4
 
 // create LED matrix object
 ArduinoLEDMatrix matrix;
@@ -31,9 +36,9 @@ int snake_x[96]= {4, 3, 2, 1};
 int snake_y[96]= {3, 3, 3, 3};
 int snake_len= 4;
 
-char direction= 'r';
+char direction= GORIGHT;
 // used to avoid a double change direction before LED turns on
-char new_direction= 'r';
+char new_direction= GORIGHT;
 
 int points= 0;
 
@@ -124,23 +129,19 @@ void move_snake() {
 
   //move the snake head
 
-  // go right
-  if (direction == 'r') {
+  if (direction == GORIGHT) {
     snake_x[0]+= 1;
     if (snake_x[0] > 11) snake_x[0]= 0;
   }
-  // go bottom
-  else if (direction == 'b') {
+  else if (direction == GOBOTTOM) {
     snake_y[0]+= 1;
     if (snake_y[0] > 7) snake_y[0]= 0;
   }
-  // go left
-  else if (direction == 'l') {
+  else if (direction == GOLEFT) {
     snake_x[0]-= 1;
     if (snake_x[0] < 0) snake_x[0]= 11;
   }
-  // go up
-  else if (direction == 'u') {
+  else if (direction == GOUP) {
     snake_y[0]-= 1;
     if (snake_y[0] < 0) snake_y[0]= 7;
   }
@@ -152,15 +153,10 @@ void move_snake() {
 }
 
 void change_direction() {
-  int u= digitalRead(BTNUP);
-  int r= digitalRead(BTNRIGHT);
-  int b= digitalRead(BTNBOTTOM);
-  int l= digitalRead(BTNLEFT);
-  
-  if      (u == LOW && direction != 'b') new_direction= 'u';
-  else if (r == LOW && direction != 'l') new_direction= 'r';
-  else if (b == LOW && direction != 'u') new_direction= 'b';
-  else if (l == LOW && direction != 'r') new_direction= 'l';
+  if      (digitalRead(BTNUP) == LOW && direction != GOBOTTOM) new_direction= GOUP;
+  else if (digitalRead(BTNRIGHT) == LOW && direction != GOLEFT) new_direction= GORIGHT;
+  else if (digitalRead(BTNBOTTOM) == LOW && direction != GOUP) new_direction= GOBOTTOM;
+  else if (digitalRead(BTNLEFT) == LOW && direction != GORIGHT) new_direction= GOLEFT;
 }
 
 
