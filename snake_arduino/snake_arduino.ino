@@ -43,7 +43,7 @@ int apple_y= 4;
 
 int loop_delay= 300;
 long exec_t2= millis();
-
+bool running= true;
 
 void setup() {
   //Serial.begin(115200);
@@ -81,7 +81,7 @@ void game_over() {
     delay(100);
   }
   Serial.println("Game Over");
-  while (true) delay(10000);
+  running= false;
 }
 
 
@@ -119,7 +119,7 @@ void move_snake() {
   for (int i= snake_len-1; i > 0; i--) {
     frame[snake_y[i-1]][snake_x[i-1]]= 1;
     if (snake_x[0] == snake_x[i] && snake_y[0] == snake_y[i])
-      game_over();
+      return game_over();
     snake_x[i]= snake_x[i-1];
     snake_y[i]= snake_y[i-1];
   }
@@ -167,6 +167,7 @@ void change_direction() {
 
 
 void loop() {
+  if (!running) return;
   long exec_t1= millis();
   change_direction();
   if (exec_t1 - exec_t2 > loop_delay) {
