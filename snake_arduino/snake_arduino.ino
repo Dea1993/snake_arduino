@@ -27,6 +27,7 @@ int snake_y[96]= {3, 3, 3, 3};
 int snake_len= 4;
 
 char direction= 'r';
+char new_direction= 'r';
 
 int points= 0;
 
@@ -160,10 +161,10 @@ void change_direction() {
   // left
   int l= digitalRead(10);
   
-  if      (u == LOW && direction != 'b') direction= 'u';
-  else if (r == LOW && direction != 'l') direction= 'r';
-  else if (b == LOW && direction != 'u') direction= 'b';
-  else if (l == LOW && direction != 'r') direction= 'l';
+  if      (u == LOW && direction != 'b') new_direction= 'u';
+  else if (r == LOW && direction != 'l') new_direction= 'r';
+  else if (b == LOW && direction != 'u') new_direction= 'b';
+  else if (l == LOW && direction != 'r') new_direction= 'l';
 }
 
 
@@ -171,10 +172,11 @@ void loop() {
   long exec_t1= millis();
   change_direction();
   if (exec_t1 - exec_t2 > loop_delay) {
+    direction= new_direction;
     show_apple();
     move_snake();
     matrix.renderBitmap(frame, 8, 12);
     exec_t2= exec_t1;
   }
-  delay(50);
+  delay(10);
 }
