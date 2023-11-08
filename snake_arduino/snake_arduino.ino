@@ -63,11 +63,7 @@ void setup() {
   randomSeed(analogRead(0));
 }
 
-void game_over() {
-  // show gameover frame
-  matrix.loadFrame(frame_game_over);
-  delay(1000);
-
+void show_points_inside_matrix() {
   // show points inside the matrix
   // clear the old frame
   for (int i=0; i < 12; i++) {
@@ -85,6 +81,13 @@ void game_over() {
   }
   Serial.println("Game Over");
   running= false;
+}
+
+void game_over() {
+  // show gameover frame
+  matrix.loadFrame(frame_game_over);
+  delay(1000);
+  show_points_inside_matrix();
 }
 
 
