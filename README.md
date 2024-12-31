@@ -19,7 +19,7 @@ This project implements the classic Snake game on an Arduino UNO R4 WiFi using a
    git clone git@github.com:Dea1993/snake_arduino.git
    cd snake_arduino
    make compile  #(arduino-cli compile -b arduino:renesas_uno:unor4wifi ./snake_arduino.ino)
-   make upload   #(arduino-cli upload -b arduino:renesas_uno:unor4wifi -p /dev/ttyACM0)```
+   make upload   #(arduino-cli upload -b arduino:renesas_uno:unor4wifi -p /dev/ttyACM0)
 2. compile it on your arduino
 
 
